@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SocialHub - Simple Social Media</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+  <!-- ===== AUTH SCREEN ===== -->
+  <div id="auth-screen" class="screen">
+    <div class="auth-card">
+      <div class="logo">
+        <i class="fas fa-share-nodes"></i>
+        <h1>SocialHub</h1>
+      </div>
+      <p class="tagline">Simple • Clean • Upgradeable</p>
+
+      <div class="auth-tabs">
+        <button class="tab active" data-tab="login">Login</button>
+        <button class="tab" data-tab="register">Register</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form">
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" id="login-username" placeholder="Username" required />
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="login-password" placeholder="Password" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="register-form" class="auth-form hidden">
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" id="reg-username" placeholder="Username" required />
+        </div>
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" id="reg-email" placeholder="Email" required />
+        </div>
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" id="reg-password" placeholder="Password" required />
+        </div>
+        <div class="input-group">
+          <i class="fas fa-user-tag"></i>
+          <input type="text" id="reg-fullname" placeholder="Full Name" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Create Account</button>
+      </form>
+
+      <p class="demo-note">Demo mode • Data saved in your browser</p>
+    </div>
+  </div>
+
+  <!-- ===== MAIN APP ===== -->
+  <div id="app-screen" class="screen hidden">
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-left">
+        <i class="fas fa-share-nodes"></i>
+        <span>SocialHub</span>
+      </div>
+      <div class="nav-center">
+        <button class="nav-btn active" data-page="feed"><i class="fas fa-home"></i></button>
+        <button class="nav-btn" data-page="explore"><i class="fas fa-compass"></i></button>
+        <button class="nav-btn" data-page="create"><i class="fas fa-plus-circle"></i></button>
+        <button class="nav-btn" data-page="profile"><i class="fas fa-user"></i></button>
+      </div>
+      <div class="nav-right">
+        <button id="theme-toggle" class="icon-btn"><i class="fas fa-moon"></i></button>
+        <button id="logout-btn" class="icon-btn"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- FEED PAGE -->
+      <section id="feed-page" class="page">
+        <div class="page-header">
+          <h2>Home Feed</h2>
+        </div>
+        <div id="feed-container" class="feed"></div>
+      </section>
+
+      <!-- EXPLORE PAGE -->
+      <section id="explore-page" class="page hidden">
+        <div class="page-header">
+          <h2>Explore Users</h2>
+        </div>
+        <div id="users-list" class="users-grid"></div>
+      </section>
+
+      <!-- CREATE PAGE -->
+      <section id="create-page" class="page hidden">
+        <div class="page-header">
+          <h2>Create Post</h2>
+        </div>
+        <div class="create-card">
+          <textarea id="post-content" placeholder="What's on your mind?" rows="4"></textarea>
+          <input type="url" id="post-image" placeholder="Image URL (optional)" />
+          <div class="create-actions">
+            <button id="submit-post" class="btn btn-primary">
+              <i class="fas fa-paper-plane"></i> Post
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROFILE PAGE -->
+      <section id="profile-page" class="page hidden">
+        <div class="profile-header">
+          <div class="avatar-lg" id="profile-avatar"></div>
+          <h2 id="profile-name"></h2>
+          <p id="profile-username"></p>
+          <p id="profile-bio" class="bio"></p>
+          <div class="profile-stats">
+            <div><strong id="posts-count">0</strong><span>Posts</span></div>
+            <div><strong id="followers-count">0</strong><span>Followers</span></div>
+            <div><strong id="following-count">0</strong><span>Following</span></div>
+          </div>
+          <button id="edit-profile-btn" class="btn btn-outline">Edit Profile</button>
+        </div>
+        <div id="profile-posts" class="feed"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div id="edit-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Edit Profile</h3>
+      <div class="input-group">
+        <input type="text" id="edit-fullname" placeholder="Full Name" />
+      </div>
+      <div class="input-group">
+        <input type="text" id="edit-bio" placeholder="Bio" />
+      </div>
+      <div class="input-group">
+        <input type="url" id="edit-avatar" placeholder="Avatar Image URL" />
+      </div>
+      <div class="modal-actions">
+        <button id="save-profile" class="btn btn-primary">Save</button>
+        <button id="cancel-edit" class="btn btn-outline">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="js/app.js"></script>
+</body>
+  </html>
