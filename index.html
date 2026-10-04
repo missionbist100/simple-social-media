@@ -1,408 +1,1193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Social Media</title>
 
-    <title>SocialHub</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+:root{
+    --blue:#1877f2;
+    --blue2:#0d65d9;
+    --bg:#f0f2f5;
+    --white:#fff;
+    --text:#1c1e21;
+    --muted:#65676b;
+    --border:#dddfe2;
+    --hover:#f2f2f2;
+    --danger:#e41e3f;
+    --green:#31a24c;
+    --shadow:0 2px 10px rgba(0,0,0,.08);
+}
 
-        body {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #eef2ff, #f8fafc);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
 
-        .container {
-            width: 100%;
-            max-width: 420px;
-        }
+button,
+input,
+textarea{
+    font-family:inherit;
+}
 
-        .logo {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+button{
+    cursor:pointer;
+}
 
-        .logo h1 {
-            font-size: 38px;
-            font-weight: 800;
-            color: #4f46e5;
-            letter-spacing: -1px;
-        }
+.hidden{
+    display:none!important;
+}
 
-        .logo p {
-            margin-top: 7px;
-            color: #64748b;
-            font-size: 15px;
-        }
+/* ================= AUTH ================= */
 
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 15px 45px rgba(15, 23, 42, 0.12);
-            border: 1px solid #e2e8f0;
-        }
+#authPage{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:linear-gradient(135deg,#e8f1ff,#f7f9fc);
+}
 
-        .tabs {
-            display: flex;
-            background: #f1f5f9;
-            padding: 5px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-        }
+.auth-box{
+    width:100%;
+    max-width:420px;
+    background:white;
+    padding:32px;
+    border-radius:18px;
+    box-shadow:0 15px 45px rgba(0,0,0,.12);
+}
 
-        .tab {
-            width: 50%;
-            padding: 11px;
-            border: none;
-            background: transparent;
-            border-radius: 9px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            color: #64748b;
-        }
+.logo{
+    color:var(--blue);
+    text-align:center;
+    font-size:40px;
+    font-weight:800;
+    margin-bottom:5px;
+}
 
-        .tab.active {
-            background: white;
-            color: #4f46e5;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
+.tagline{
+    text-align:center;
+    color:var(--muted);
+    margin-bottom:25px;
+}
 
-        .form-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 6px;
-        }
+.auth-tabs{
+    display:flex;
+    gap:5px;
+    background:var(--bg);
+    padding:5px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
 
-        .form-subtitle {
-            color: #64748b;
-            font-size: 14px;
-            margin-bottom: 22px;
-        }
+.auth-tab{
+    flex:1;
+    border:0;
+    background:transparent;
+    padding:11px;
+    border-radius:7px;
+    font-weight:bold;
+}
 
-        .input-group {
-            margin-bottom: 16px;
-        }
+.auth-tab.active{
+    background:white;
+    color:var(--blue);
+}
 
-        label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #334155;
-            margin-bottom: 7px;
-        }
+.form-group{
+    margin-bottom:15px;
+}
 
-        input {
-            width: 100%;
-            padding: 13px 14px;
-            border: 1px solid #cbd5e1;
-            border-radius: 10px;
-            outline: none;
-            font-size: 15px;
-            transition: 0.2s;
-            background: white;
-        }
+.form-group label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+    font-size:14px;
+}
 
-        input:focus {
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
-        }
+.form-group input{
+    width:100%;
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    outline:none;
+}
 
-        .main-btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 11px;
-            background: linear-gradient(135deg, #4f46e5, #6366f1);
-            color: white;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 5px;
-            transition: 0.2s;
-        }
+.form-group input:focus{
+    border-color:var(--blue);
+}
 
-        .main-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(79,70,229,0.25);
-        }
+.auth-button{
+    width:100%;
+    padding:13px;
+    border:0;
+    background:var(--blue);
+    color:white;
+    border-radius:9px;
+    font-size:16px;
+    font-weight:bold;
+}
 
-        .main-btn:active {
-            transform: scale(0.98);
-        }
+.auth-button:hover{
+    background:var(--blue2);
+}
 
-        .message {
-            margin-top: 15px;
-            text-align: center;
-            font-size: 14px;
-            min-height: 20px;
-        }
+.demo{
+    text-align:center;
+    margin-top:18px;
+    color:var(--muted);
+    font-size:13px;
+}
 
-        .demo {
-            text-align: center;
-            margin-top: 22px;
-            color: #94a3b8;
-            font-size: 12px;
-        }
+/* ================= APP ================= */
 
-        .footer {
-            text-align: center;
-            margin-top: 18px;
-            font-size: 12px;
-            color: #94a3b8;
-        }
+#app{
+    min-height:100vh;
+}
 
-        @media (max-width: 480px) {
-            body {
-                padding: 15px;
-            }
+.navbar{
+    height:64px;
+    background:white;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    padding:0 20px;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
 
-            .card {
-                padding: 23px;
-                border-radius: 17px;
-            }
+.nav-logo{
+    color:var(--blue);
+    font-size:27px;
+    font-weight:800;
+    margin-right:25px;
+}
 
-            .logo h1 {
-                font-size: 32px;
-            }
-        }
-    </style>
+.search-box{
+    width:270px;
+    position:relative;
+}
+
+.search-box input{
+    border:0;
+    background:var(--bg);
+    border-radius:20px;
+    padding-left:40px;
+}
+
+.search-icon{
+    position:absolute;
+    left:14px;
+    top:11px;
+    color:var(--muted);
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    flex:1;
+}
+
+.nav-link{
+    width:75px;
+    height:50px;
+    border:0;
+    background:transparent;
+    border-radius:8px;
+    color:var(--muted);
+    font-size:22px;
+}
+
+.nav-link:hover{
+    background:var(--hover);
+}
+
+.nav-link.active{
+    color:var(--blue);
+    border-bottom:3px solid var(--blue);
+    border-radius:0;
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.circle-btn{
+    width:40px;
+    height:40px;
+    border:0;
+    border-radius:50%;
+    background:var(--bg);
+    font-size:18px;
+}
+
+.circle-btn:hover{
+    background:#e4e6e9;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    object-fit:cover;
+    background:#dbeafe;
+}
+
+.mobile-menu{
+    display:none;
+}
+
+/* ================= LAYOUT ================= */
+
+.main-layout{
+    max-width:1350px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:260px minmax(400px,680px) 280px;
+    gap:20px;
+    padding:20px;
+}
+
+.left-sidebar,
+.right-sidebar{
+    position:sticky;
+    top:84px;
+    height:max-content;
+}
+
+.sidebar-card{
+    background:white;
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:15px;
+    box-shadow:var(--shadow);
+}
+
+.side-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:11px;
+    border-radius:8px;
+    border:0;
+    width:100%;
+    background:transparent;
+    text-align:left;
+    font-weight:600;
+}
+
+.side-item:hover{
+    background:var(--hover);
+}
+
+.side-icon{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#e7f3ff;
+    color:var(--blue);
+}
+
+.section-title{
+    font-size:17px;
+    margin-bottom:12px;
+}
+
+.center{
+    min-width:0;
+}
+
+/* ================= STORIES ================= */
+
+.stories{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding-bottom:5px;
+    margin-bottom:15px;
+}
+
+.story{
+    min-width:110px;
+    height:175px;
+    border-radius:12px;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(135deg,#1877f2,#7c3aed);
+    color:white;
+    flex-shrink:0;
+}
+
+.story img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:.8;
+}
+
+.story-name{
+    position:absolute;
+    bottom:10px;
+    left:9px;
+    right:5px;
+    font-size:13px;
+    font-weight:bold;
+    text-shadow:0 1px 4px #000;
+}
+
+.story-avatar{
+    position:absolute;
+    top:9px;
+    left:9px;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:3px solid var(--blue);
+}
+
+/* ================= COMPOSER ================= */
+
+.card{
+    background:white;
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    margin-bottom:15px;
+}
+
+.composer{
+    padding:15px;
+}
+
+.composer-top{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.composer-input{
+    flex:1;
+    background:var(--bg);
+    border:0;
+    border-radius:20px;
+    padding:12px 16px;
+    color:var(--muted);
+    cursor:pointer;
+}
+
+.composer-actions{
+    display:flex;
+    border-top:1px solid var(--border);
+    margin-top:12px;
+    padding-top:8px;
+}
+
+.action-button{
+    flex:1;
+    border:0;
+    background:transparent;
+    padding:10px;
+    border-radius:8px;
+    color:var(--muted);
+    font-weight:bold;
+}
+
+.action-button:hover{
+    background:var(--hover);
+}
+
+/* ================= POST ================= */
+
+.post{
+    overflow:hidden;
+}
+
+.post-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:15px;
+}
+
+.post-user{
+    flex:1;
+}
+
+.post-user strong{
+    display:block;
+    font-size:15px;
+}
+
+.post-user small{
+    color:var(--muted);
+}
+
+.post-menu{
+    border:0;
+    background:transparent;
+    font-size:20px;
+    color:var(--muted);
+}
+
+.post-text{
+    padding:0 15px 15px;
+    line-height:1.5;
+    white-space:pre-wrap;
+}
+
+.post-image{
+    width:100%;
+    max-height:600px;
+    object-fit:cover;
+    display:block;
+}
+
+.post-stats{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 15px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.post-actions{
+    display:flex;
+    border-top:1px solid var(--border);
+    margin:0 15px;
+}
+
+.post-action{
+    flex:1;
+    border:0;
+    background:transparent;
+    padding:11px;
+    color:var(--muted);
+    font-weight:bold;
+    border-radius:7px;
+}
+
+.post-action:hover{
+    background:var(--hover);
+}
+
+.post-action.liked{
+    color:var(--blue);
+}
+
+/* ================= COMMENTS ================= */
+
+.comments{
+    padding:0 15px 15px;
+}
+
+.comment{
+    display:flex;
+    gap:8px;
+    margin-top:10px;
+}
+
+.comment-body{
+    background:var(--bg);
+    padding:8px 11px;
+    border-radius:12px;
+}
+
+.comment-body strong{
+    display:block;
+    font-size:13px;
+}
+
+.comment-body span{
+    font-size:14px;
+}
+
+.comment-form{
+    display:flex;
+    gap:8px;
+    margin-top:12px;
+}
+
+.comment-form input{
+    flex:1;
+    border:0;
+    background:var(--bg);
+    border-radius:20px;
+    padding:10px 14px;
+    outline:none;
+}
+
+.comment-form button{
+    border:0;
+    background:var(--blue);
+    color:white;
+    width:40px;
+    border-radius:50%;
+}
+
+/* ================= RIGHT ================= */
+
+.online-item,
+.friend-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:8px;
+}
+
+.online-dot{
+    width:10px;
+    height:10px;
+    background:var(--green);
+    border-radius:50%;
+    margin-left:-18px;
+    margin-top:25px;
+    border:2px solid white;
+}
+
+.friend-info{
+    flex:1;
+}
+
+.friend-info strong{
+    font-size:14px;
+}
+
+.friend-info small{
+    color:var(--muted);
+}
+
+/* ================= PAGE ================= */
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.page-title{
+    font-size:25px;
+    margin-bottom:18px;
+}
+
+.profile-cover{
+    height:240px;
+    background:linear-gradient(135deg,#1877f2,#6d28d9);
+    border-radius:12px 12px 0 0;
+    position:relative;
+}
+
+.profile-info{
+    background:white;
+    padding:0 25px 25px;
+    border-radius:0 0 12px 12px;
+    box-shadow:var(--shadow);
+}
+
+.profile-avatar{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    object-fit:cover;
+    border:5px solid white;
+    margin-top:-65px;
+    position:relative;
+}
+
+.profile-name{
+    font-size:28px;
+    margin-top:8px;
+}
+
+.profile-bio{
+    color:var(--muted);
+    margin:6px 0 15px;
+}
+
+.profile-buttons{
+    display:flex;
+    gap:8px;
+}
+
+.btn{
+    border:0;
+    padding:10px 18px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.btn-primary{
+    background:var(--blue);
+    color:white;
+}
+
+.btn-secondary{
+    background:var(--bg);
+    color:var(--text);
+}
+
+/* ================= NOTIFICATIONS ================= */
+
+.notification{
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:10px;
+    box-shadow:var(--shadow);
+}
+
+.notification.unread{
+    background:#eaf3ff;
+}
+
+.notification-text{
+    flex:1;
+}
+
+.notification-text strong{
+    font-size:14px;
+}
+
+/* ================= MESSAGES ================= */
+
+.message-layout{
+    display:grid;
+    grid-template-columns:240px 1fr;
+    min-height:600px;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+}
+
+.message-list{
+    border-right:1px solid var(--border);
+}
+
+.message-contact{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px;
+    cursor:pointer;
+}
+
+.message-contact:hover,
+.message-contact.active{
+    background:var(--bg);
+}
+
+.chat{
+    display:flex;
+    flex-direction:column;
+}
+
+.chat-header{
+    padding:15px;
+    border-bottom:1px solid var(--border);
+    font-weight:bold;
+}
+
+.chat-messages{
+    flex:1;
+    padding:20px;
+    overflow:auto;
+}
+
+.chat-message{
+    max-width:70%;
+    padding:10px 13px;
+    border-radius:15px;
+    margin-bottom:8px;
+}
+
+.chat-message.received{
+    background:var(--bg);
+}
+
+.chat-message.sent{
+    background:var(--blue);
+    color:white;
+    margin-left:auto;
+}
+
+.chat-input{
+    border-top:1px solid var(--border);
+    padding:12px;
+    display:flex;
+    gap:8px;
+}
+
+.chat-input input{
+    flex:1;
+    border:0;
+    background:var(--bg);
+    border-radius:20px;
+    padding:11px;
+    outline:none;
+}
+
+.chat-input button{
+    width:42px;
+    border:0;
+    background:var(--blue);
+    color:white;
+    border-radius:50%;
+}
+
+/* ================= SEARCH ================= */
+
+.search-results{
+    display:grid;
+    gap:10px;
+}
+
+.search-result{
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:500;
+}
+
+.modal-box{
+    width:min(550px,100%);
+    background:white;
+    border-radius:15px;
+    padding:20px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.modal-close{
+    border:0;
+    background:var(--bg);
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    font-size:18px;
+}
+
+.modal textarea{
+    width:100%;
+    min-height:140px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px;
+    resize:vertical;
+    outline:none;
+}
+
+.modal-footer{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:12px;
+}
+
+.image-preview{
+    width:100%;
+    max-height:250px;
+    object-fit:cover;
+    border-radius:10px;
+    margin-top:10px;
+}
+
+/* ================= TOAST ================= */
+
+.toast{
+    position:fixed;
+    bottom:25px;
+    left:50%;
+    transform:translateX(-50%) translateY(100px);
+    background:#1c1e21;
+    color:white;
+    padding:12px 20px;
+    border-radius:25px;
+    opacity:0;
+    transition:.3s;
+    z-index:1000;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
+/* ================= DARK MODE ================= */
+
+body.dark{
+    --bg:#18191a;
+    --white:#242526;
+    --surface:#242526;
+    --text:#e4e6eb;
+    --muted:#b0b3b8;
+    --border:#3e4042;
+    --hover:#3a3b3c;
+}
+
+body.dark .navbar,
+body.dark .card,
+body.dark .sidebar-card,
+body.dark .profile-info,
+body.dark .notification,
+body.dark .search-result,
+body.dark .modal-box,
+body.dark .message-layout,
+body.dark .auth-box{
+    background:#242526;
+}
+
+body.dark .auth-page{
+    background:#18191a;
+}
+
+body.dark input,
+body.dark textarea{
+    background:#3a3b3c;
+    color:white;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1100px){
+    .main-layout{
+        grid-template-columns:210px minmax(400px,1fr);
+    }
+
+    .right-sidebar{
+        display:none;
+    }
+}
+
+@media(max-width:750px){
+    .navbar{
+        padding:0 10px;
+    }
+
+    .nav-logo{
+        font-size:22px;
+        margin-right:8px;
+    }
+
+    .search-box{
+        display:none;
+    }
+
+    .nav-links{
+        gap:0;
+    }
+
+    .nav-link{
+        width:45px;
+        font-size:19px;
+    }
+
+    .nav-right .circle-btn{
+        display:none;
+    }
+
+    .main-layout{
+        display:block;
+        padding:10px;
+    }
+
+    .left-sidebar{
+        display:none;
+    }
+
+    .center{
+        width:100%;
+    }
+
+    .mobile-menu{
+        display:block;
+    }
+
+    .stories{
+        margin-left:-5px;
+        margin-right:-5px;
+    }
+
+    .story{
+        min-width:90px;
+        height:145px;
+    }
+
+    .profile-cover{
+        height:170px;
+    }
+
+    .profile-avatar{
+        width:100px;
+        height:100px;
+        margin-top:-50px;
+    }
+
+    .profile-name{
+        font-size:23px;
+    }
+
+    .message-layout{
+        grid-template-columns:1fr;
+    }
+
+    .message-list{
+        display:none;
+    }
+}
+
+@media(max-width:450px){
+    .auth-box{
+        padding:22px;
+    }
+
+    .logo{
+        font-size:34px;
+    }
+
+    .nav-link{
+        width:40px;
+    }
+
+    .avatar{
+        width:35px;
+        height:35px;
+    }
+
+    .navbar{
+        height:58px;
+    }
+
+    .post-image{
+        max-height:450px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <div class="container">
+<!-- =========================================================
+     AUTHENTICATION
+     ========================================================= -->
 
-        <div class="logo">
-            <h1>SocialHub</h1>
-            <p>Simple • Clean • Upgradeable</p>
+<section id="authPage">
+
+    <div class="auth-box">
+
+        <div class="logo">Simple</div>
+        <p class="tagline">Connect. Share. Discover.</p>
+
+        <div class="auth-tabs">
+            <button class="auth-tab active" id="loginTab">Login</button>
+            <button class="auth-tab" id="registerTab">Register</button>
         </div>
 
-        <div class="card">
+        <form id="loginForm">
 
-            <div class="tabs">
-                <button class="tab active" onclick="showLogin()">
-                    Login
-                </button>
-
-                <button class="tab" onclick="showRegister()">
-                    Register
-                </button>
+            <div class="form-group">
+                <label>Email</label>
+                <input id="loginEmail" type="email" placeholder="Enter your email" required>
             </div>
 
-            <!-- LOGIN -->
-            <div id="loginForm">
-
-                <h2 class="form-title">Welcome back</h2>
-
-                <p class="form-subtitle">
-                    Login to continue to SocialHub.
-                </p>
-
-                <div class="input-group">
-                    <label>Username</label>
-                    <input
-                        type="text"
-                        id="loginUsername"
-                        placeholder="Enter username"
-                    >
-                </div>
-
-                <div class="input-group">
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        id="loginPassword"
-                        placeholder="Enter password"
-                    >
-                </div>
-
-                <button class="main-btn" onclick="login()">
-                    Login
-                </button>
-
-                <div class="message" id="loginMessage"></div>
-
+            <div class="form-group">
+                <label>Password</label>
+                <input id="loginPassword" type="password" placeholder="Enter your password" required>
             </div>
 
+            <button class="auth-button" type="submit">
+                Login
+            </button>
 
-            <!-- REGISTER -->
-            <div id="registerForm" style="display:none;">
+        </form>
 
-                <h2 class="form-title">Create account</h2>
+        <form id="registerForm" class="hidden">
 
-                <p class="form-subtitle">
-                    Join SocialHub today.
-                </p>
-
-                <div class="input-group">
-                    <label>Username</label>
-                    <input
-                        type="text"
-                        id="registerUsername"
-                        placeholder="Choose username"
-                    >
-                </div>
-
-                <div class="input-group">
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        id="registerPassword"
-                        placeholder="Create password"
-                    >
-                </div>
-
-                <button class="main-btn" onclick="register()">
-                    Create Account
-                </button>
-
-                <div class="message" id="registerMessage"></div>
-
+            <div class="form-group">
+                <label>Full Name</label>
+                <input id="registerName" type="text" placeholder="Your name" required>
             </div>
 
-            <div class="demo">
-                Demo mode • Data saved in your browser
+            <div class="form-group">
+                <label>Email</label>
+                <input id="registerEmail" type="email" placeholder="Your email" required>
             </div>
 
-        </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input id="registerPassword" type="password" placeholder="Create password" required>
+            </div>
 
-        <div class="footer">
-            © 2026 SocialHub
-        </div>
+            <button class="auth-button" type="submit">
+                Create Account
+            </button>
+
+        </form>
+
+        <p class="demo">
+            Demo: enter any email and password to continue.
+        </p>
 
     </div>
 
-
-    <script>
-
-        function showLogin() {
-
-            document.getElementById("loginForm").style.display = "block";
-            document.getElementById("registerForm").style.display = "none";
-
-            document.querySelectorAll(".tab")[0].classList.add("active");
-            document.querySelectorAll(".tab")[1].classList.remove("active");
-        }
+</section>
 
 
-        function showRegister() {
+<!-- =========================================================
+     MAIN APP
+     ========================================================= -->
 
-            document.getElementById("loginForm").style.display = "none";
-            document.getElementById("registerForm").style.display = "block";
+<div id="app" class="hidden">
 
-            document.querySelectorAll(".tab")[0].classList.remove("active");
-            document.querySelectorAll(".tab")[1].classList.add("active");
-        }
+    <!-- NAVBAR -->
 
+    <nav class="navbar">
 
-        function register() {
+        <div class="nav-logo">
+            Simple
+        </div>
 
-            const username =
-                document.getElementById("registerUsername").value.trim();
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input id="globalSearch" type="text" placeholder="Search Simple">
+        </div>
 
-            const password =
-                document.getElementById("registerPassword").value;
+        <div class="nav-links">
 
-            const message =
-                document.getElementById("registerMessage");
+            <button class="nav-link active" data-page="home" title="Home">
+                🏠
+            </button>
 
+            <button class="nav-link" data-page="friends" title="Friends">
+                👥
+            </button>
 
-            if (!username || !password) {
+            <button class="nav-link" data-page="messages" title="Messages">
+                💬
+            </button>
 
-                message.style.color = "#ef4444";
-                message.textContent = "Please fill all fields.";
-                return;
-            }
+            <button class="nav-link" data-page="notifications" title="Notifications">
+                🔔
+            </button>
 
+        </div>
 
-            localStorage.setItem(
-                "socialhub_user",
-                JSON.stringify({
-                    username: username,
-                    password: password
-                })
-            );
+        <div class="nav-right">
 
+            <button class="circle-btn" id="themeButton" title="Theme">
+                🌙
+            </button>
 
-            message.style.color = "#16a34a";
-            message.textContent = "Account created successfully!";
+            <button class="circle-btn" id="logoutButton" title="Logout">
+                🚪
+            </button>
 
+            <img id="navAvatar" class="avatar" src="" alt="Profile">
 
-            setTimeout(() => {
-                showLogin();
+        </div>
 
-                document.getElementById("loginUsername").value = username;
-            }, 800);
-        }
-
-
-        function login() {
-
-            const username =
-                document.getElementById("loginUsername").value.trim();
-
-            const password =
-                document.getElementById("loginPassword").value;
-
-            const message =
-                document.getElementById("loginMessage");
+    </nav>
 
 
-            const savedUser =
-                JSON.parse(localStorage.getItem("socialhub_user"));
+    <!-- MAIN -->
 
+    <main class="main-layout">
 
-            if (!savedUser) {
+        <!-- LEFT SIDEBAR -->
 
-                message.style.color = "#ef4444";
-                message.textContent =
-                    "No account found. Please register first.";
+        <aside class="left-sidebar">
 
-                return;
-            }
+            <div class="sidebar-card">
 
+                <button class="side-item" data-page="home">
+                    <span class="side-icon">🏠</span>
+                    Home
+                </button>
 
-            if (
-                username === savedUser.username &&
-                password === savedUser.password
-            ) {
+                <button class="side-item" data-page="profile">
+                    <span class="side-icon">👤</span>
+                    My Profile
+                </button>
 
-                message.style.color = "#16a34a";
-                message.textContent = "Login successful!";
+                <button class="side-item" data-page="friends">
+                    <span class="side-icon">👥</span>
+                    Friends
+                </button>
 
-                setTimeout(() => {
+                <button class="side-item" data-page="messages">
+                    <span class="side-icon">💬</span>
+                    Messages
+                </button>
 
-                    alert(
-                        "Welcome to SocialHub, " +
-                        savedUser.username +
-                        "!"
-                    );
+                <button class="side-item" data-page="notifications">
+                    <span class="side-icon">🔔</span>
+                    Notifications
+                </button>
 
-                }, 300);
+                <button class="side-item" id="sidebarTheme">
+                    <span class="side-icon">🌙</span>
+                    Dark Mode
+                </button>
 
-            } else {
+            </div>
 
-                message.style.color = "#ef4444";
-                message.textContent =
-                    "Invalid username or password.";
-            }
-        }
+            <div class="sidebar-card">
 
-    </script>
+                <h3 class="section-title">
+                    Shortcuts
+                </h3>
 
-</body>
-</html>
+                <button class="side-item">
+                    <span class="side-icon">🎬</span>
+                    Videos
+                </button>
+
+                <button class="side-item">
+                    <span class="side-icon">📸</span>
+                    Photos
+                </button>
+
+                <button class="side-item">
+                    <span class="side-icon">⭐</span>
+ 
