@@ -1,378 +1,408 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>SocialHub - Simple Social Media</title>
+    <title>SocialHub</title>
 
-  <!-- Main CSS -->
-  <link rel="stylesheet" href="style.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
 
-  <!-- Font Awesome Icons -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-  />
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #eef2ff, #f8fafc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo h1 {
+            font-size: 38px;
+            font-weight: 800;
+            color: #4f46e5;
+            letter-spacing: -1px;
+        }
+
+        .logo p {
+            margin-top: 7px;
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 45px rgba(15, 23, 42, 0.12);
+            border: 1px solid #e2e8f0;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f1f5f9;
+            padding: 5px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .tab {
+            width: 50%;
+            padding: 11px;
+            border: none;
+            background: transparent;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .tab.active {
+            background: white;
+            color: #4f46e5;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .form-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .form-subtitle {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 22px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            outline: none;
+            font-size: 15px;
+            transition: 0.2s;
+            background: white;
+        }
+
+        input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
+        }
+
+        .main-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: 0.2s;
+        }
+
+        .main-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(79,70,229,0.25);
+        }
+
+        .main-btn:active {
+            transform: scale(0.98);
+        }
+
+        .message {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        .demo {
+            text-align: center;
+            margin-top: 22px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .card {
+                padding: 23px;
+                border-radius: 17px;
+            }
+
+            .logo h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <!-- ===== AUTH SCREEN ===== -->
-  <div id="auth-screen" class="screen">
-    <div class="auth-card">
+    <div class="container">
 
-      <div class="logo">
-        <i class="fas fa-share-nodes"></i>
-        <h1>SocialHub</h1>
-      </div>
-
-      <p class="tagline">Simple • Clean • Upgradeable</p>
-
-      <div class="auth-tabs">
-        <button class="tab active" data-tab="login">
-          Login
-        </button>
-
-        <button class="tab" data-tab="register">
-          Register
-        </button>
-      </div>
-
-      <!-- Login Form -->
-      <form id="login-form" class="auth-form">
-
-        <div class="input-group">
-          <i class="fas fa-user"></i>
-
-          <input
-            type="text"
-            id="login-username"
-            placeholder="Username"
-            required
-          />
+        <div class="logo">
+            <h1>SocialHub</h1>
+            <p>Simple • Clean • Upgradeable</p>
         </div>
 
-        <div class="input-group">
-          <i class="fas fa-lock"></i>
-
-          <input
-            type="password"
-            id="login-password"
-            placeholder="Password"
-            required
-          />
-        </div>
-
-        <button type="submit" class="btn btn-primary">
-          Login
-        </button>
-
-      </form>
-
-      <!-- Register Form -->
-      <form id="register-form" class="auth-form hidden">
-
-        <div class="input-group">
-          <i class="fas fa-user"></i>
-
-          <input
-            type="text"
-            id="reg-username"
-            placeholder="Username"
-            required
-          />
-        </div>
-
-        <div class="input-group">
-          <i class="fas fa-envelope"></i>
-
-          <input
-            type="email"
-            id="reg-email"
-            placeholder="Email"
-            required
-          />
-        </div>
-
-        <div class="input-group">
-          <i class="fas fa-lock"></i>
-
-          <input
-            type="password"
-            id="reg-password"
-            placeholder="Password"
-            required
-          />
-        </div>
-
-        <div class="input-group">
-          <i class="fas fa-user-tag"></i>
-
-          <input
-            type="text"
-            id="reg-fullname"
-            placeholder="Full Name"
-            required
-          />
-        </div>
-
-        <button type="submit" class="btn btn-primary">
-          Create Account
-        </button>
-
-      </form>
-
-      <p class="demo-note">
-        Demo mode • Data saved in your browser
-      </p>
-
-    </div>
-  </div>
-
-
-  <!-- ===== MAIN APP ===== -->
-  <div id="app-screen" class="screen hidden">
-
-    <!-- Navbar -->
-    <nav class="navbar">
-
-      <div class="nav-left">
-        <i class="fas fa-share-nodes"></i>
-        <span>SocialHub</span>
-      </div>
-
-      <div class="nav-center">
-
-        <button class="nav-btn active" data-page="feed">
-          <i class="fas fa-home"></i>
-        </button>
-
-        <button class="nav-btn" data-page="explore">
-          <i class="fas fa-compass"></i>
-        </button>
-
-        <button class="nav-btn" data-page="create">
-          <i class="fas fa-plus-circle"></i>
-        </button>
-
-        <button class="nav-btn" data-page="profile">
-          <i class="fas fa-user"></i>
-        </button>
-
-      </div>
-
-      <div class="nav-right">
-
-        <button id="theme-toggle" class="icon-btn">
-          <i class="fas fa-moon"></i>
-        </button>
-
-        <button id="logout-btn" class="icon-btn">
-          <i class="fas fa-sign-out-alt"></i>
-        </button>
-
-      </div>
-
-    </nav>
-
-
-    <!-- Main Content -->
-    <main class="main-content">
-
-      <!-- ===== FEED PAGE ===== -->
-      <section id="feed-page" class="page">
-
-        <div class="page-header">
-          <h2>Home Feed</h2>
-        </div>
-
-        <div id="feed-container" class="feed"></div>
-
-      </section>
-
-
-      <!-- ===== EXPLORE PAGE ===== -->
-      <section id="explore-page" class="page hidden">
-
-        <div class="page-header">
-          <h2>Explore Users</h2>
-        </div>
-
-        <div id="users-list" class="users-grid"></div>
-
-      </section>
-
-
-      <!-- ===== CREATE PAGE ===== -->
-      <section id="create-page" class="page hidden">
-
-        <div class="page-header">
-          <h2>Create Post</h2>
-        </div>
-
-        <div class="create-card">
-
-          <textarea
-            id="post-content"
-            placeholder="What's on your mind?"
-            rows="4"
-          ></textarea>
-
-          <input
-            type="url"
-            id="post-image"
-            placeholder="Image URL (optional)"
-          />
-
-          <div class="create-actions">
-
-            <button id="submit-post" class="btn btn-primary">
-
-              <i class="fas fa-paper-plane"></i>
-
-              Post
-
-            </button>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- ===== PROFILE PAGE ===== -->
-      <section id="profile-page" class="page hidden">
-
-        <div class="profile-header">
-
-          <div
-            class="avatar-lg"
-            id="profile-avatar"
-          ></div>
-
-          <h2 id="profile-name"></h2>
-
-          <p id="profile-username"></p>
-
-          <p
-            id="profile-bio"
-            class="bio"
-          ></p>
-
-          <div class="profile-stats">
-
-            <div>
-              <strong id="posts-count">0</strong>
-              <span>Posts</span>
+        <div class="card">
+
+            <div class="tabs">
+                <button class="tab active" onclick="showLogin()">
+                    Login
+                </button>
+
+                <button class="tab" onclick="showRegister()">
+                    Register
+                </button>
             </div>
 
-            <div>
-              <strong id="followers-count">0</strong>
-              <span>Followers</span>
+            <!-- LOGIN -->
+            <div id="loginForm">
+
+                <h2 class="form-title">Welcome back</h2>
+
+                <p class="form-subtitle">
+                    Login to continue to SocialHub.
+                </p>
+
+                <div class="input-group">
+                    <label>Username</label>
+                    <input
+                        type="text"
+                        id="loginUsername"
+                        placeholder="Enter username"
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Enter password"
+                    >
+                </div>
+
+                <button class="main-btn" onclick="login()">
+                    Login
+                </button>
+
+                <div class="message" id="loginMessage"></div>
+
             </div>
 
-            <div>
-              <strong id="following-count">0</strong>
-              <span>Following</span>
+
+            <!-- REGISTER -->
+            <div id="registerForm" style="display:none;">
+
+                <h2 class="form-title">Create account</h2>
+
+                <p class="form-subtitle">
+                    Join SocialHub today.
+                </p>
+
+                <div class="input-group">
+                    <label>Username</label>
+                    <input
+                        type="text"
+                        id="registerUsername"
+                        placeholder="Choose username"
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        id="registerPassword"
+                        placeholder="Create password"
+                    >
+                </div>
+
+                <button class="main-btn" onclick="register()">
+                    Create Account
+                </button>
+
+                <div class="message" id="registerMessage"></div>
+
             </div>
 
-          </div>
-
-          <button
-            id="edit-profile-btn"
-            class="btn btn-outline"
-          >
-            Edit Profile
-          </button>
+            <div class="demo">
+                Demo mode • Data saved in your browser
+            </div>
 
         </div>
 
-        <div
-          id="profile-posts"
-          class="feed"
-        ></div>
-
-      </section>
-
-    </main>
-
-  </div>
-
-
-  <!-- ===== EDIT PROFILE MODAL ===== -->
-  <div
-    id="edit-modal"
-    class="modal hidden"
-  >
-
-    <div class="modal-content">
-
-      <h3>Edit Profile</h3>
-
-      <div class="input-group">
-
-        <input
-          type="text"
-          id="edit-fullname"
-          placeholder="Full Name"
-        />
-
-      </div>
-
-      <div class="input-group">
-
-        <input
-          type="text"
-          id="edit-bio"
-          placeholder="Bio"
-        />
-
-      </div>
-
-      <div class="input-group">
-
-        <input
-          type="url"
-          id="edit-avatar"
-          placeholder="Avatar Image URL"
-        />
-
-      </div>
-
-      <div class="modal-actions">
-
-        <button
-          id="save-profile"
-          class="btn btn-primary"
-        >
-          Save
-        </button>
-
-        <button
-          id="cancel-edit"
-          class="btn btn-outline"
-        >
-          Cancel
-        </button>
-
-      </div>
+        <div class="footer">
+            © 2026 SocialHub
+        </div>
 
     </div>
 
-  </div>
+
+    <script>
+
+        function showLogin() {
+
+            document.getElementById("loginForm").style.display = "block";
+            document.getElementById("registerForm").style.display = "none";
+
+            document.querySelectorAll(".tab")[0].classList.add("active");
+            document.querySelectorAll(".tab")[1].classList.remove("active");
+        }
 
 
-  <!-- ===== TOAST ===== -->
-  <div
-    id="toast"
-    class="toast hidden"
-  ></div>
+        function showRegister() {
+
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("registerForm").style.display = "block";
+
+            document.querySelectorAll(".tab")[0].classList.remove("active");
+            document.querySelectorAll(".tab")[1].classList.add("active");
+        }
 
 
-  <!-- Main JavaScript -->
-  <script src="app.js"></script>
+        function register() {
+
+            const username =
+                document.getElementById("registerUsername").value.trim();
+
+            const password =
+                document.getElementById("registerPassword").value;
+
+            const message =
+                document.getElementById("registerMessage");
+
+
+            if (!username || !password) {
+
+                message.style.color = "#ef4444";
+                message.textContent = "Please fill all fields.";
+                return;
+            }
+
+
+            localStorage.setItem(
+                "socialhub_user",
+                JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            );
+
+
+            message.style.color = "#16a34a";
+            message.textContent = "Account created successfully!";
+
+
+            setTimeout(() => {
+                showLogin();
+
+                document.getElementById("loginUsername").value = username;
+            }, 800);
+        }
+
+
+        function login() {
+
+            const username =
+                document.getElementById("loginUsername").value.trim();
+
+            const password =
+                document.getElementById("loginPassword").value;
+
+            const message =
+                document.getElementById("loginMessage");
+
+
+            const savedUser =
+                JSON.parse(localStorage.getItem("socialhub_user"));
+
+
+            if (!savedUser) {
+
+                message.style.color = "#ef4444";
+                message.textContent =
+                    "No account found. Please register first.";
+
+                return;
+            }
+
+
+            if (
+                username === savedUser.username &&
+                password === savedUser.password
+            ) {
+
+                message.style.color = "#16a34a";
+                message.textContent = "Login successful!";
+
+                setTimeout(() => {
+
+                    alert(
+                        "Welcome to SocialHub, " +
+                        savedUser.username +
+                        "!"
+                    );
+
+                }, 300);
+
+            } else {
+
+                message.style.color = "#ef4444";
+                message.textContent =
+                    "Invalid username or password.";
+            }
+        }
+
+    </script>
 
 </body>
-                </html>
+</html>
